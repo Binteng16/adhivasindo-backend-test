@@ -8,7 +8,9 @@ use App\Services\ExternalDataService;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
+use Throwable;
 
 class ExternalSearchController extends Controller
 {
@@ -53,29 +55,42 @@ class ExternalSearchController extends Controller
 
     private function handleSearch(string $field, mixed $value, callable $searchCallback): JsonResponse
     {
-        $trimmedValue = trim((string) $value);
+        try {
+            $trimmedValue = trim((string) $value);
 
-        if ($trimmedValue === '') {
+            if ($trimmedValue === '') {
+                return $this->errorResponse(
+                    message: "Parameter {$field} tidak boleh kosong.",
+                    statusCode: Response::HTTP_UNPROCESSABLE_ENTITY
+                );
+            }
+
+            $results = $searchCallback($trimmedValue);
+            $count = count($results);
+
+            return $this->successResponse(
+                data: ExternalDataResource::collection($results),
+                message: $count > 0
+                    ? 'Data berhasil ditemukan.'
+                    : "Data dengan kriteria {$field} tersebut tidak ditemukan.",
+                meta: [
+                    'field'       => $field,
+                    'query'       => $trimmedValue,
+                    'total_found' => $count,
+                    'timestamp'   => now()->toISOString(),
+                ]
+            );
+        } catch (Throwable $e) {
+            Log::error("External Search Error [{$field}]: " . $e->getMessage(), [
+                'field' => $field,
+                'value' => $value,
+                'trace' => $e->getTraceAsString(),
+            ]);
+
             return $this->errorResponse(
-                message: "Parameter {$field} tidak boleh kosong.",
-                statusCode: Response::HTTP_UNPROCESSABLE_ENTITY
+                message: 'Terjadi kesalahan sistem saat mengambil data eksternal.',
+                statusCode: Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
-
-        $results = $searchCallback($trimmedValue);
-        $count = count($results);
-
-        return $this->successResponse(
-            data: ExternalDataResource::collection($results),
-            message: $count > 0
-                ? 'Data berhasil ditemukan.'
-                : "Data dengan kriteria {$field} tersebut tidak ditemukan.",
-            meta: [
-                'field'       => $field,
-                'query'       => $trimmedValue,
-                'total_found' => $count,
-                'timestamp'   => now()->toISOString(),
-            ]
-        );
     }
 }

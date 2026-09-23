@@ -13,13 +13,15 @@ class AuthService
      *
      * @return array{user: User, token: string}|null
      */
-    public function attemptLogin(string $email, string $password): ?array
+    public function login(array $credentials): array
     {
-        $user = User::where('email', $email)->first();
+        $user = User::where('email', $credentials['email'])->first();
 
-        if (! $user || ! Hash::check($password, $user->password)) {
-            return null;
+        if (! $user || ! Hash::check($credentials['password'], $user->password)) {
+            throw new \Exception('Kredensial tidak valid.');
         }
+
+        $user->tokens()->delete();
 
         $token = $user->createToken('auth_token')->plainTextToken;
 

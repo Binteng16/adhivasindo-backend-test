@@ -9,9 +9,15 @@ use Illuminate\Support\Facades\Hash;
 class UserService
 {
 
-    public function getAllUsers(): Collection
+    public function getAllUsers(?int $limit = null)
     {
-        return User::latest()->get();
+        $query = User::latest();
+
+        if ($limit && $limit > 0) {
+            $query->limit($limit);
+        }
+
+        return $query->get();
     }
 
     public function findUserById(string $id): ?User
@@ -30,7 +36,7 @@ class UserService
 
     public function updateUser(User $user, array $data): User
     {
-        $cleanPayload = array_filter($data, fn ($value) => ! is_null($value) && $value !== '');
+        $cleanPayload = array_filter($data, fn($value) => ! is_null($value) && $value !== '');
 
         if (! empty($cleanPayload)) {
             if (isset($cleanPayload['password'])) {
