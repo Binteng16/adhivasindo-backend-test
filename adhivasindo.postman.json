@@ -1,0 +1,245 @@
+{
+  "info": {
+    "_postman_id": "58032b5d-4fd4-4384-930d-dddd89fe94a1",
+    "name": "Take Home Test Adhivasindo",
+    "description": "## Take Home Test Adhivasindo\n\nKoleksi ini berisi sekumpulan endpoint REST API yang dibuat untuk keperluan **Take Home Test Adhivasindo**. Koleksi ini mencakup autentikasi pengguna dan manajemen data pengguna secara lengkap, yang diorganisasikan ke dalam kelompok-kelompok berikut:\n\n### Autentikasi\n- **Login** – Mengautentikasi pengguna dan mendapatkan token akses.\n- **Logout** – Mengakhiri sesi pengguna yang sedang aktif.\n\n### CRUD – Manajemen Pengguna\nOperasi standar untuk membuat, membaca, memperbarui, dan menghapus data pengguna:\n- **Read All Users** – Mengambil daftar seluruh pengguna yang terdaftar.\n- **Create User** – Menambahkan pengguna baru ke dalam sistem.\n- **Update User** – Memperbarui data pengguna yang sudah ada.\n- **Delete User** – Menghapus pengguna dari sistem.\n- **Get by ID** – Mengambil data satu pengguna berdasarkan ID uniknya.\n\n### Pencarian\nEndpoint pencarian fleksibel untuk menemukan pengguna berdasarkan atribut tertentu:\n- **Get Search Nama** – Mencari pengguna berdasarkan nama.\n- **Get Search NIM** – Mencari pengguna berdasarkan Nomor Induk Mahasiswa (NIM).\n- **Get Search YMD** – Mencari pengguna berdasarkan tanggal dalam format Tahun-Bulan-Hari (YMD).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "58377233",
+    "_collection_link": "https://go.postman.co/collection/58377233-58032b5d-4fd4-4384-930d-dddd89fe94a1?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "CRUD",
+      "item": [
+        {
+          "name": "Read All Users",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "1|XxXcETlLmxXwwUhO86DRt9KisSoO0Jj1F9R8bIfsf8fe6bc9",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/users",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create User",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "2|RCyN6bruHKC5fSuoOiKyUcmC3IDUnd6rQz4GDDM229441930",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Bintang Ghani\",\r\n  \"email\": \"bintang@example.com\",\r\n  \"password\": \"password123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/users",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Get Search By Nama, NIM, YMD",
+      "item": [
+        {
+          "name": "Get Search Nama",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "1|XxXcETlLmxXwwUhO86DRt9KisSoO0Jj1F9R8bIfsf8fe6bc9",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:8000/api/search/nama?nama=Turner Mia",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "search",
+                "nama"
+              ],
+              "query": [
+                {
+                  "key": "nama",
+                  "value": "Turner Mia"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Search NIM",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Search YMD",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Login",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "1|XxXcETlLmxXwwUhO86DRt9KisSoO0Jj1F9R8bIfsf8fe6bc9",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"email\": \"admin@adhivasindo.co.id\",\r\n  \"password\": \"password123\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/login",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Logout",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": ""
+        }
+      },
+      "response": []
+    }
+  ]
+}
