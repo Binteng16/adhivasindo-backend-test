@@ -33,7 +33,7 @@ class AuthController extends Controller
                 'password.required' => 'Kolom password wajib diisi.',
             ]);
 
-            $authResult = $this->authService->attemptLogin(
+            $authResult = $this->authService->login(
                 email: $fields['email'],
                 password: $fields['password']
             );
